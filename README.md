@@ -67,3 +67,6 @@ There are 3 different jar files.
 (Decompiled with ReCaf)
 
 There is also an ``attach`` task, which will let you inject a jar into a running java process as a java agent (as long as it is a valid agent).
+
+## Info
+Currently it will download the client 1.21 file and map it with tiny-remapper 0.10.4
