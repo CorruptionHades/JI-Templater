@@ -1,5 +1,6 @@
 package me.corruptionhades.ji_templater;
 
+import me.corruptionhades.ZipUtil;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Task;
 import org.gradle.api.tasks.TaskAction;
@@ -8,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DeployTask extends DefaultTask {
 
@@ -56,6 +59,16 @@ public class DeployTask extends DefaultTask {
 
         remap(build, deployFileOfficial, "official", getRemappedNamed());
         System.out.println("Deployed Official");
+
+        List<File> dependencies = new ArrayList<>();
+        for (File runtimeClasspath : getProject().getConfigurations().getByName("runtimeClasspath").getFiles()) {
+            if(runtimeClasspath.getAbsolutePath().contains("remapped-named.jar")) {
+                continue;
+            }
+
+            dependencies.add(runtimeClasspath);
+        }
+        ZipUtil.combineJarFiles(deployFileFabric, dependencies.toArray(File[]::new));
     }
 
     private void remap(File file, File to, String named, File classpath) {

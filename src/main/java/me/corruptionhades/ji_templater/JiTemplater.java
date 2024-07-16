@@ -23,5 +23,6 @@ public class JiTemplater implements Plugin<Project> {
         project.getTasks().register("setup", SetupTask.class);
         project.getTasks().register("deploy", DeployTask.class);
         project.getTasks().register("attach", AttachTask.class);
+        project.getTasks().register("testingji", TestTask.class);
     }
 }
