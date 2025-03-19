@@ -1,8 +1,7 @@
-package me.corruptionhades.ji_templater;
+package me.corruptionhades.ji_templater.tasks;
 
-import me.corruptionhades.ZipUtil;
+import me.corruptionhades.ji_templater.utils.ZipUtil;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.Task;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.BufferedReader;
@@ -52,7 +51,6 @@ public class DeployTask extends DefaultTask {
         if(debug) {
             System.out.println("Deploying to " + deployDir.getAbsolutePath());
         }
-
 
         remap(build, deployFileFabric, "intermediary", getRemappedNamed());
         System.out.println("Deployed Fabric");

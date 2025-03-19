@@ -1,5 +1,9 @@
 package me.corruptionhades.ji_templater;
 
+import me.corruptionhades.ji_templater.tasks.AttachTask;
+import me.corruptionhades.ji_templater.tasks.DeployTask;
+import me.corruptionhades.ji_templater.tasks.SetupTask;
+import me.corruptionhades.ji_templater.tasks.UpgradeToLatestTask;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -23,6 +27,6 @@ public class JiTemplater implements Plugin<Project> {
         project.getTasks().register("setup", SetupTask.class);
         project.getTasks().register("deploy", DeployTask.class);
         project.getTasks().register("attach", AttachTask.class);
-        project.getTasks().register("testingji", TestTask.class);
+        project.getTasks().register("upgrade", UpgradeToLatestTask.class);
     }
 }

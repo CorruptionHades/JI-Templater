@@ -1,11 +1,9 @@
-package me.corruptionhades;
+package me.corruptionhades.ji_templater.utils;
 
-import java.io.File;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
