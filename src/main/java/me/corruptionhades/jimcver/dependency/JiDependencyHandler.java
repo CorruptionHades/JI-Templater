@@ -17,8 +17,14 @@ public class JiDependencyHandler {
         this.configuration = configuration;
     }
 
+	// fix for Groovy's dynamic method invocation
+	// This method will be called from the build script via Groovy's dynamic method invocation.
+	public void call(String version) {
+		invoke(version);
+	}
+
 	/**
-	 * This method will be called from the build script via Groovy's dynamic method invocation.
+	 * This is called from kotlin gradle scripts or when using the method directly.
 	 * @param version The version of Minecraft to add as a dependency.
 	 */
 	public void invoke(String version) {
