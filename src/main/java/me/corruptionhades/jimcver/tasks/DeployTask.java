@@ -178,7 +178,7 @@ public class DeployTask extends DefaultTask {
             System.err.println("No version found! CRITICAL");
             return null;
         }
-        return new File(getProject().getRootDir(),".ji/download/" + version);
+        return new File(getProject().getRootDir(),JiTemplater.DOWNLOAD_DIR + version);
     }
 
     private File getBuildDir() {

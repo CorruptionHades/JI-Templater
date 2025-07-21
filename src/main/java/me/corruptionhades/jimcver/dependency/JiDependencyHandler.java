@@ -34,7 +34,7 @@ public class JiDependencyHandler {
 
 		project.getLogger().lifecycle( JiTemplater.DEPENDENCY_COMMAND + " getting " + version);
 
-		File downloadDir = new File(project.getRootDir(), ".ji/download/" + version);
+		File downloadDir = new File(project.getRootDir(), JiTemplater.DOWNLOAD_DIR + version);
 		if (!downloadDir.exists()) {
 			downloadDir.mkdirs();
 		}

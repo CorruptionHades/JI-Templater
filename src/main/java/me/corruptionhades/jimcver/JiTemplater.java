@@ -23,6 +23,7 @@ public class JiTemplater implements Plugin<Project> {
 
     public static final String DEPENDENCY_COMMAND = "jimc";
     public static final String DEPENDENCY_COMMAND_INTERNAL = "jimc-internal";
+    public static final String DOWNLOAD_DIR = ".gradle/.ji/download/";
 
     @Override
     public void apply(Project project) {

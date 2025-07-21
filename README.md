@@ -34,6 +34,10 @@ dependencies {
 }
 ```
 
+You can find the downloads in ```.gradle/.ji/download/```.
+
+**Note: ji-mc-ver only supports a single version at a time. You can specify multiple versions and they will download, but only the last version will be the dependency!**
+
 Now you have access to all the Minecraft classes in your project!
 If you now want build your project into a jar, the ``deploy`` task will do it for you!
 
