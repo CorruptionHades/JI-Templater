@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'me.corruptionhades'
-version = '1.0-SNAPSHOT'
+version = '1.0'
 
 build.dependsOn shadowJar
 
@@ -21,6 +21,8 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
+    testImplementation gradleTestKit()
+
     implementation gradleApi()
     implementation localGroovy()
 
@@ -29,9 +31,9 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("JiTemplater") {
-            id = "ji_templater"
-            implementationClass = "me.corruptionhades.ji_templater.JiTemplater"
+        create("JI-MC-Ver") {
+            id = "ji-mc-ver"
+            implementationClass = "me.corruptionhades.jimcver.JiTemplater"
         }
     }
 }

@@ -1,4 +1,4 @@
-package me.corruptionhades.ji_templater.utils;
+package me.corruptionhades.jimcver.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

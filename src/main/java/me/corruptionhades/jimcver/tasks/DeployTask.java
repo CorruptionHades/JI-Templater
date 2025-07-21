@@ -1,6 +1,6 @@
-package me.corruptionhades.ji_templater.tasks;
+package me.corruptionhades.jimcver.tasks;
 
-import me.corruptionhades.ji_templater.utils.ZipUtil;
+import me.corruptionhades.jimcver.utils.ZipUtil;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 
@@ -16,10 +16,10 @@ public class DeployTask extends DefaultTask {
     boolean debug = true;
 
     public DeployTask() {
-        setGroup("ji-templater");
+        setGroup("ji-mc-ver");
         setDescription("Deploy your mod.");
         dependsOn("build");
-        Object val = getProject().getProperties().get("ji-templater-debug");
+        Object val = getProject().getProperties().get("ji-mc-ver-debug");
         if(val != null) {
             debug = (boolean) val;
         }
@@ -67,6 +67,7 @@ public class DeployTask extends DefaultTask {
             dependencies.add(runtimeClasspath);
         }
         ZipUtil.combineJarFiles(deployFileFabric, dependencies.toArray(File[]::new));
+        ZipUtil.combineJarFiles(deployFileOfficial, dependencies.toArray(File[]::new));
     }
 
     private void remap(File file, File to, String named, File classpath) {

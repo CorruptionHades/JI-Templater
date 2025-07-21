@@ -1,4 +1,4 @@
-package me.corruptionhades.ji_templater.tasks;
+package me.corruptionhades.jimcver.tasks;
 
 import com.sun.tools.attach.VirtualMachine;
 import org.gradle.api.DefaultTask;
@@ -14,7 +14,7 @@ public class AttachTask extends DefaultTask {
     private Properties config;
 
     public AttachTask() {
-        setGroup("ji-templater");
+        setGroup("ji-mc-ver");
         setDescription("Attach to the Minecraft process.");
         loadConfig();
     }

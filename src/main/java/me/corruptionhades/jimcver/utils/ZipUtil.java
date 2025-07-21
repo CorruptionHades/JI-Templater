@@ -1,4 +1,4 @@
-package me.corruptionhades.ji_templater.utils;
+package me.corruptionhades.jimcver.utils;
 
 import java.io.File;
 import java.io.FileInputStream;

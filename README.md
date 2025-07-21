@@ -1,27 +1,13 @@
-# JI Templater
+# JI-MC-Ver
 
-This is a gradle plugin which generates the Yarn (fabric) Minecraft jar file for you.
+This is a gradle plugin which generates the Yarn mapped (fabric) Minecraft jar file for you.
 
 To use it in your project, replace your build.gradle with this:
 ```gradle
-buildscript {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        flatDir {
-            dirs 'libs'
-        }
-    }
-    dependencies {
-        classpath files('path/to/JI-Template-1.0-SNAPSHOT.jar')
-    }
-}
-
 plugins {
     id 'java'
+    id 'ji-mc-ver' version '1.0' // uses local maven repository
 }
-
-apply plugin: 'ji_templater'
 
 repositories {
     mavenLocal()
@@ -29,29 +15,32 @@ repositories {
 }
 
 dependencies {
-    // dependencies
-    // we'll come back to it later
+    
 }
 ```
 
-Once you've added it, run the setup task
+Create a file called ``config.properties`` in the root of your project. Here you can specify the process name and the agent name.
 
-![image](https://github.com/user-attachments/assets/de1173f4-e227-4589-8e8f-65b768f1a428)
+Example:
+```properties
+processName=net.fabricmc.loader.impl.launch.knot.KnotClient 
+agentName=Ji-Template-Test-fabric.jar
+```
 
-This will download and remap everything for you.
-
-To use it add this line to your dependencies:
+In your ``build.gradle`` Use the ``jimc()`` function to specify the Minecraft version you want to use.
 ```gradle
-implementation files(".gradle/download/remapped-named.jar")
+dependencies {
+    jimc("1.21")
+}
 ```
 
 Now you have access to all the Minecraft classes in your project!
-If you now want build it into a jar, the ``deploy`` task will do it for you!
-You can find it here.
+If you now want build your project into a jar, the ``deploy`` task will do it for you!
+
+There will be 3 different output jar files.
 
 ![image](https://github.com/user-attachments/assets/83ba9be0-fecb-4f0d-86b3-d0f52324e8ae)
 
-There are 3 different jar files.
 1. This is just your normal code that you wrote
 
 ![image](https://github.com/user-attachments/assets/8fafeffb-e38d-4130-9f13-4dd5f1293e7f)

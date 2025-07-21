@@ -1,13 +1,14 @@
-package me.corruptionhades.ji_templater.utils;
+package me.corruptionhades.jimcver.utils;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class SetupUtil {
 
-    public static void setup(File downloadDir, String clientJarLink, String mappingsLink, String remapperLink) {
+    public static String setup(File downloadDir, String clientJarLink, String mappingsLink, String remapperLink) {
         System.out.println("Setting up...");
 
         if(downloadDir.exists()) {
@@ -40,10 +41,20 @@ public class SetupUtil {
         remap(clientJar, remapper, mappingsFile, "remapped-intermediary.jar", "intermediary");
         System.out.println("Remapped client.jar to remapped-intermediary.jar");
 
-        System.out.println("Done setting up! Make sure to add \"implementation files(\".gradle/download/remapped-named.jar\")\" to your dependencies!");
+        System.out.println("Done setting up!");
+
+        return "remapped-named.jar";
     }
 
     private static void remap(File clientJar, File remapper, File mappings, String newName, String to) {
+
+        // check if new file already exists
+        File newFile = new File(clientJar.getParentFile(), newName);
+        if (newFile.exists()) {
+            System.out.println("File " + newName + " already exists. Skipping remap.");
+            return;
+        }
+
         try {
             String cmd = "java -jar " +
                     remapper.getAbsolutePath() + " " +
@@ -123,12 +134,23 @@ public class SetupUtil {
 
         File file = new File(dir, link.substring(link.lastIndexOf('/') + 1));
 
-        try (BufferedInputStream in = new BufferedInputStream(new URL(link).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            byte dataBuffer[] = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
+        try {
+            URL url = new URL(link);
+            HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+            long remoteFileSize = httpConnection.getContentLengthLong();
+
+            if (file.exists() && file.length() == remoteFileSize) {
+                System.out.println("File already exists and has the same size. Skipping download.");
+                return file;
+            }
+
+            try (BufferedInputStream in = new BufferedInputStream(httpConnection.getInputStream());
+                 FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                byte[] dataBuffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                    fileOutputStream.write(dataBuffer, 0, bytesRead);
+                }
             }
         } catch (IOException e) {
             // handle exception
