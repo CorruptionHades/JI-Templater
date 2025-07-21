@@ -1,7 +1,9 @@
 package me.corruptionhades.jimcver.tasks;
 
+import me.corruptionhades.jimcver.JiTemplater;
 import me.corruptionhades.jimcver.utils.ZipUtil;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.BufferedReader;
@@ -31,7 +33,7 @@ public class DeployTask extends DefaultTask {
         System.out.println("Deploying...");
         File build = getBuild();
         if(build == null) {
-            System.err.println("No build found.");
+            System.err.println("No build directory found.");
             return;
         }
 
@@ -132,13 +134,29 @@ public class DeployTask extends DefaultTask {
     }
 
     private File getMapping() {
-        File dir = getDownloadDir();
+        File dir = getDownloadDirForVersion();
         return new File(dir, "mappings/mappings.tiny");
+    }
+
+    private String getVersion() {
+        Configuration config = getProject().getConfigurations().getByName(JiTemplater.DEPENDENCY_COMMAND_INTERNAL);
+        if(config == null ) {
+            System.err.println("No configuration found! CRITICAL");
+            return null;
+        }
+
+        File first = config.getFiles().stream().findFirst().orElse(null);
+        if(first == null) {
+            System.err.println("No files found in configuration! CRITICAL");
+            return null;
+        }
+
+        return first.getParentFile().getName();
     }
 
     private File getRemapper() {
 
-        File downloadDir = getDownloadDir();
+        File downloadDir = getDownloadDirForVersion();
 
         for (String s : downloadDir.list()) {
             if(s.contains("tiny-remapper")) {
@@ -150,12 +168,17 @@ public class DeployTask extends DefaultTask {
     }
 
     private File getRemappedNamed() {
-        File dir = getDownloadDir();
+        File dir = getDownloadDirForVersion();
         return new File(dir,"remapped-named.jar");
     }
 
-    private File getDownloadDir() {
-        return new File(getProject().getRootDir(),".gradle/download");
+    private File getDownloadDirForVersion() {
+        String version = getVersion();
+        if(version == null) {
+            System.err.println("No version found! CRITICAL");
+            return null;
+        }
+        return new File(getProject().getRootDir(),".ji/download/" + version);
     }
 
     private File getBuildDir() {

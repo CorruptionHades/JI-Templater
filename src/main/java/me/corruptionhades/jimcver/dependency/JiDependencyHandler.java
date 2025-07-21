@@ -5,6 +5,7 @@ import me.corruptionhades.jimcver.utils.FabricMeta;
 import me.corruptionhades.jimcver.utils.SetupUtil;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
 
 import java.io.File;
 
@@ -43,6 +44,11 @@ public class JiDependencyHandler {
 		String remapper = "https://maven.fabricmc.net/net/fabricmc/tiny-remapper/0.9.0/tiny-remapper-0.9.0-fat.jar";
 
 		String remappedNamed = SetupUtil.setup(downloadDir, clientLink, mappingLink, remapper);
+
+		// clear
+		for (Dependency dep : configuration.getDependencies()) {
+			configuration.getDependencies().remove(dep);
+		}
 
 		project.getDependencies().add(configuration.getName(),
 				project.files(downloadDir.getAbsolutePath() + "/" + remappedNamed));
