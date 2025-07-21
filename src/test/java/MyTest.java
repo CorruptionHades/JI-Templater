@@ -18,7 +18,7 @@ public class MyTest {
         String buildFileContent = """
          plugins {
          	id 'java'
-            id("ji_templater")
+            id("ji-mc-ver")
          }
          repositories {
 			  mavenCentral()
